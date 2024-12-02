@@ -202,11 +202,11 @@ class NodeController extends ActionController
         if ($resolvedNode === null) {
             throw new NodeNotFoundException(sprintf('The shortcut node target of node "%s" could not be resolved', $node->getPath()), 1430218730);
         } elseif (is_string($resolvedNode)) {
-            $this->redirectToUri($resolvedNode);
+            $this->redirectToUri($resolvedNode, 0, 301);
         } elseif ($resolvedNode instanceof NodeInterface && $resolvedNode === $node) {
             throw new NodeNotFoundException('The requested node does not exist or isn\'t accessible to the current user', 1502793585);
         } elseif ($resolvedNode instanceof NodeInterface) {
-            $this->redirect('show', null, null, ['node' => $resolvedNode]);
+            $this->redirect('show', null, null, ['node' => $resolvedNode], 0, 301);
         } else {
             throw new UnresolvableShortcutException(sprintf('The shortcut node target of node "%s" resolves to an unsupported type "%s"', $node->getPath(), is_object($resolvedNode) ? get_class($resolvedNode) : gettype($resolvedNode)), 1430218738);
         }
